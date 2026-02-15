@@ -69,7 +69,13 @@ describe('Custom Hooks', () => {
   });
 
   describe('useDebounce', () => {
-    jest.useFakeTimers();
+    beforeEach(() => {
+      jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
+    });
 
     it('debounces value changes', () => {
       const { result, rerender } = renderHook(
@@ -88,12 +94,16 @@ describe('Custom Hooks', () => {
       
       expect(result.current).toBe('updated');
     });
-
-    jest.useRealTimers();
   });
 
   describe('useTimer', () => {
-    jest.useFakeTimers();
+    beforeEach(() => {
+      jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
+    });
 
     it('starts and increments timer', () => {
       const { result } = renderHook(() => useTimer());
@@ -135,7 +145,5 @@ describe('Custom Hooks', () => {
       
       expect(result.current.time).toBe(0);
     });
-
-    jest.useRealTimers();
   });
 });
