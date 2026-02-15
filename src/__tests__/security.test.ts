@@ -1,4 +1,4 @@
-import { validateEmail, validatePassword, validateAnswerInput, sanitizeInput } from '../security';
+import { validateEmail, validatePassword, validateAnswerInput, sanitizeInput } from '../utils/security';
 
 describe('Security Utils', () => {
   describe('validateEmail', () => {
