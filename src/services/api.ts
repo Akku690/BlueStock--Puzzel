@@ -15,7 +15,7 @@ const RATE_LIMIT_DELAY = 1000; // 1 second
 
 // Rate limiting
 let lastRequestTime = 0;
-let requestQueue: Array<() => Promise<any>> = [];
+const requestQueue: Array<() => Promise<unknown>> = [];
 let isProcessingQueue = false;
 
 /**
@@ -229,28 +229,23 @@ export const processSyncQueue = async (): Promise<void> => {
 /**
  * Authenticate user
  */
-export const authenticate = async (email: string, password: string): Promise<any> => {
-  try {
-    const response = await rateLimitedRequest(() =>
-      fetch(`${API_BASE_URL}/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({ email, password }),
-      })
-    );
+export const authenticate = async (email: string, password: string): Promise<unknown> => {
+  const response = await rateLimitedRequest(() =>
+    fetch(`${API_BASE_URL}/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({ email, password }),
+    })
+  );
 
-    if (!response.ok) {
-      throw new Error('Authentication failed');
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error('Authentication error:', error);
-    throw error;
+  if (!response.ok) {
+    throw new Error('Authentication failed');
   }
+
+  return await response.json();
 };
 
 /**
@@ -258,7 +253,6 @@ export const authenticate = async (email: string, password: string): Promise<any
  */
 export const setupOnlineSync = (): void => {
   window.addEventListener('online', async () => {
-    console.log('Back online - syncing data...');
     await flushProgressBatch();
     await processSyncQueue();
   });

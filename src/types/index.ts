@@ -35,7 +35,7 @@ export interface CachedData<T> {
 export interface SyncQueue {
   id: string;
   action: 'progress' | 'stats' | 'achievement';
-  data: any;
+  data: UserProgress | UserStats;
   timestamp: number;
   retries: number;
 }

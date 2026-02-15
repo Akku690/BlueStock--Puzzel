@@ -8,8 +8,6 @@ export const registerSW = async (): Promise<void> => {
         scope: '/',
       });
 
-      console.log('Service Worker registered:', registration);
-
       // Check for updates periodically
       setInterval(() => {
         registration.update();
@@ -30,7 +28,7 @@ export const registerSW = async (): Promise<void> => {
         }
       });
     } catch (error) {
-      console.error('Service Worker registration failed:', error);
+      // Service Worker registration failed silently
     }
   }
 };
@@ -53,7 +51,7 @@ export const unregisterSW = async (): Promise<void> => {
 export const isStandalone = (): boolean => {
   return (
     window.matchMedia('(display-mode: standalone)').matches ||
-    (window.navigator as any).standalone === true
+    ((window.navigator as unknown as { standalone?: boolean }).standalone === true)
   );
 };
 

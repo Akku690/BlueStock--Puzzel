@@ -105,7 +105,7 @@ export const clearOldCache = (): void => {
   const keys = Object.keys(localStorage);
   const now = Date.now();
 
-  keys.forEach(key => {
+  for (const key of keys) {
     try {
       const stored = localStorage.getItem(key);
       if (stored) {
@@ -117,7 +117,7 @@ export const clearOldCache = (): void => {
     } catch (error) {
       // Skip invalid entries
     }
-  });
+  }
 };
 
 /**
@@ -126,10 +126,9 @@ export const clearOldCache = (): void => {
 export const getStorageStats = (): { used: number; available: number } => {
   let used = 0;
   
-  for (let key in localStorage) {
-    if (localStorage.hasOwnProperty(key)) {
-      used += localStorage[key].length + key.length;
-    }
+  const keys = Object.keys(localStorage);
+  for (const key of keys) {
+    used += localStorage[key].length + key.length;
   }
 
   // Most browsers have 5-10MB limit for localStorage

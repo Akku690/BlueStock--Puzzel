@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { Puzzle, UserProgress, UserStats } from '@/types';
 import {
-  getPuzzle,
   getPuzzleByDate,
   getProgress,
   getStats,

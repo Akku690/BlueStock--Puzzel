@@ -121,7 +121,7 @@ export const secureStorage = {
       // In production, consider encrypting sensitive data
       sessionStorage.setItem(key, value);
     } catch (error) {
-      console.error('Error writing to session storage:', error);
+      // Session storage write failed silently
     }
   },
 
@@ -129,7 +129,6 @@ export const secureStorage = {
     try {
       return sessionStorage.getItem(key);
     } catch (error) {
-      console.error('Error reading from session storage:', error);
       return null;
     }
   },
@@ -138,7 +137,7 @@ export const secureStorage = {
     try {
       sessionStorage.removeItem(key);
     } catch (error) {
-      console.error('Error removing from session storage:', error);
+      // Session storage removal failed silently
     }
   },
 
@@ -146,7 +145,7 @@ export const secureStorage = {
     try {
       sessionStorage.clear();
     } catch (error) {
-      console.error('Error clearing session storage:', error);
+      // Session storage clear failed silently
     }
   },
 };
@@ -169,7 +168,7 @@ export const isSecureContext = (): boolean => {
 /**
  * Input sanitization for puzzle data
  */
-export const sanitizePuzzleData = (data: any): any => {
+export const sanitizePuzzleData = (data: unknown): unknown => {
   if (typeof data === 'string') {
     return sanitizeInput(data);
   }
@@ -179,11 +178,9 @@ export const sanitizePuzzleData = (data: any): any => {
   }
 
   if (typeof data === 'object' && data !== null) {
-    const sanitized: any = {};
-    for (const key in data) {
-      if (data.hasOwnProperty(key)) {
-        sanitized[key] = sanitizePuzzleData(data[key]);
-      }
+    const sanitized: Record<string, unknown> = {};
+    for (const key of Object.keys(data)) {
+      sanitized[key] = sanitizePuzzleData((data as Record<string, unknown>)[key]);
     }
     return sanitized;
   }

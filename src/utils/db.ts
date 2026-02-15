@@ -110,7 +110,7 @@ export const getAllProgress = async (): Promise<UserProgress[]> => {
 // Stats operations
 export const saveStats = async (stats: UserStats): Promise<void> => {
   const db = await initDB();
-  await db.put('stats', { ...stats, id: 'user-stats' } as any);
+  await db.put('stats', { ...stats, id: 'user-stats' } as UserStats & { id: string });
 };
 
 export const getStats = async (): Promise<UserStats | undefined> => {
