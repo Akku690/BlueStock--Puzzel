@@ -1,0 +1,230 @@
+.puzzle-game {
+  margin-bottom: 2rem;
+}
+
+.puzzle-card {
+  background: var(--panel);
+  border-radius: 1.5rem;
+  padding: 2.25rem;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 24px 50px var(--shadow);
+  max-width: 700px;
+  margin: 0 auto;
+  backdrop-filter: blur(14px);
+  transform: translateZ(0);
+}
+
+.puzzle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.puzzle-category {
+  background: rgba(34, 211, 238, 0.2);
+  color: var(--secondary);
+  border: 1px solid rgba(34, 211, 238, 0.4);
+  padding: 0.375rem 0.875rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.puzzle-difficulty {
+  padding: 0.375rem 0.875rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.puzzle-difficulty-easy {
+  background: rgba(36, 214, 138, 0.15);
+  color: #7ff7c2;
+}
+
+.puzzle-difficulty-medium {
+  background: rgba(245, 166, 35, 0.15);
+  color: #ffd494;
+}
+
+.puzzle-difficulty-hard {
+  background: rgba(255, 107, 107, 0.15);
+  color: #ffb2b2;
+}
+
+.puzzle-question {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2rem;
+  line-height: 1.4;
+}
+
+.puzzle-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.puzzle-option {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: rgba(13, 18, 36, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  text-align: left;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.puzzle-option:hover:not(:disabled) {
+  background: rgba(34, 211, 238, 0.12);
+  border-color: rgba(34, 211, 238, 0.4);
+  transform: translateY(-2px) scale(1.01);
+}
+
+.puzzle-option.selected {
+  background: rgba(91, 140, 255, 0.18);
+  border-color: rgba(91, 140, 255, 0.5);
+}
+
+.puzzle-option.correct {
+  background: rgba(36, 214, 138, 0.18);
+  border-color: rgba(36, 214, 138, 0.6);
+}
+
+.puzzle-option.incorrect {
+  background: rgba(255, 107, 107, 0.18);
+  border-color: rgba(255, 107, 107, 0.6);
+}
+
+.puzzle-option:disabled {
+  cursor: default;
+}
+
+.option-letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  font-weight: 700;
+  color: var(--text);
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.option-text {
+  flex: 1;
+}
+
+.option-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.result-message {
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.result-message.success {
+  background: rgba(36, 214, 138, 0.12);
+  color: #bafadf;
+}
+
+.result-message.error {
+  background: rgba(245, 166, 35, 0.15);
+  color: #ffe1ae;
+}
+
+.result-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.result-message p {
+  margin: 0.5rem 0;
+  font-weight: 600;
+}
+
+.result-stats {
+  font-size: 0.875rem;
+  opacity: 0.8;
+  font-weight: 400 !important;
+}
+
+.puzzle-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+  padding: 0.875rem 2.5rem;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  letter-spacing: 0.01em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: linear-gradient(120deg, var(--primary), #4fd2ff);
+  color: #0b0f1c;
+  box-shadow: 0 10px 24px rgba(91, 140, 255, 0.35);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(120deg, #4fd2ff, var(--primary));
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(91, 140, 255, 0.5);
+}
+
+.btn-secondary {
+  background: rgba(245, 166, 35, 0.2);
+  color: #ffd494;
+  border: 1px solid rgba(245, 166, 35, 0.5);
+}
+
+.btn-secondary:hover {
+  background: rgba(245, 166, 35, 0.35);
+  transform: translateY(-2px);
+}
+
+.attempt-counter {
+  text-align: center;
+  margin-top: 1rem;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+@media (max-width: 768px) {
+  .puzzle-card {
+    padding: 1.5rem;
+  }
+
+  .puzzle-question {
+    font-size: 1.25rem;
+  }
+
+  .puzzle-option {
+    padding: 0.875rem 1rem;
+  }
+}
