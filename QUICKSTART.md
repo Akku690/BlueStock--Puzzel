@@ -58,13 +58,21 @@ Create a `.env` file:
 cp .env.example .env
 ```
 
-Edit `.env` and set your API URL:
+Edit `.env` and set your API URL + Supabase auth config:
 
 ```env
 VITE_API_URL=https://api.yourdomain.com
+VITE_SUPABASE_URL=https://your-project-ref.supabase.co
+VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
 ```
 
-**Note:** For local development, you can use a placeholder URL. The app works fully offline.
+For Supabase setup:
+1. Create a project in Supabase.
+2. Go to **Project Settings → API**.
+3. Copy **Project URL** and **anon public key** into `.env`.
+4. In **Authentication → Providers**, keep **Email** enabled.
+
+**Note:** Auth now uses Supabase backend. Without these two variables, sign-in/sign-up will be disabled.
 
 ### 3. Start Development Server
 
@@ -77,10 +85,18 @@ The app will open at `http://localhost:3000`
 ## 🎯 Your First Puzzle
 
 1. **Open the app** - Navigate to `http://localhost:3000`
-2. **See today's puzzle** - A puzzle is generated instantly (< 100ms)
-3. **Select an answer** - Click on one of the four options
-4. **Submit** - Click the "Submit Answer" button
-5. **Track your streak** - See your streak in the header
+2. **Pick your mode** - Choose `Daily Mode` or `AI Sprint`
+3. **Use game HUD** - Track timer, combo, score, and level progress
+4. **Use lifelines** - Try `50-50 Hint` and `+15s Boost`
+5. **Submit and chain wins** - Build combo and maximize score
+
+## 🕹️ Game Features
+
+- **AI Sprint Mode**: fast rounds with countdown and next-challenge flow
+- **Gamified HUD**: live timer, score, combo multiplier, and level meter
+- **Lifelines**: remove two wrong options or add extra time
+- **Session Progression**: sprint score scaling and combo-based momentum
+- **Backend Auth**: real email/password sign in and sign up via Supabase
 
 ## 🛠️ Development Commands
 

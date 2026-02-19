@@ -81,9 +81,7 @@ export const loadFromStorage = <T>(key: string): T | null => {
       return null;
     }
 
-    const cachedData: CachedData<T> = cachedData.compressed
-      ? decompress(stored)
-      : JSON.parse(stored);
+    const cachedData = decompress<CachedData<T>>(stored);
 
     // Check if cache is expired
     if (Date.now() - cachedData.timestamp > CACHE_DURATION) {

@@ -104,6 +104,64 @@
   flex-wrap: wrap;
 }
 
+.badge-button {
+  cursor: pointer;
+}
+
+.badge-button:hover {
+  border-color: rgba(34, 211, 238, 0.5);
+  background: rgba(34, 211, 238, 0.16);
+}
+
+.game-sections {
+  padding: 1.8rem;
+  border-radius: 1.35rem;
+  background: rgba(9, 12, 26, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 18px 40px var(--shadow);
+}
+
+.game-sections-title {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.game-sections-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.game-section-card {
+  padding: 1rem;
+  border-radius: 0.95rem;
+  background: rgba(17, 22, 40, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.game-section-card h4 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: var(--secondary);
+}
+
+.game-section-card p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.game-section-play {
+  margin-top: 0.8rem;
+  width: 100%;
+}
+
+.selected-category-text {
+  margin-top: 1rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
 .showcase-visual {
   position: relative;
   height: 280px;
@@ -255,6 +313,10 @@
   .showcase {
     grid-template-columns: 1fr;
     padding: 1.75rem;
+  }
+
+  .game-sections-grid {
+    grid-template-columns: 1fr;
   }
 
   .showcase-visual {

@@ -8,6 +8,16 @@ export interface Puzzle {
   category: string;
 }
 
+export type GameCategory =
+  | 'Stock Market'
+  | 'Finance'
+  | 'Economics'
+  | 'Trading'
+  | 'Investment'
+  | 'Grid Puzzles'
+  | 'Sudoku'
+  | 'Nonograms';
+
 export interface UserProgress {
   puzzleId: string;
   completed: boolean;
@@ -53,4 +63,81 @@ export interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
+}
+
+export interface StoredUser {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  createdAt: string;
+}
+export interface Achievement {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  unlockedAt?: string;
+  rarity: 'common' | 'rare' | 'epic' | 'legendary';
+}
+
+export interface Trophy {
+  id: string;
+  title: string;
+  description: string;
+  emoji: string;
+  earnedAt?: string;
+}
+
+export interface LeaderboardEntry {
+  rank: number;
+  userId: string;
+  displayName: string;
+  score: number;
+  puzzlesSolved: number;
+  achievements: number;
+  winRate: number;
+  lastActive: string;
+}
+
+export interface DailyPuzzle extends Puzzle {
+  type: 'daily' | 'weekly';
+  dueDate: string;
+  solvedBy: number;
+  reward: number;
+}
+
+export interface PredictionChallenge {
+  id: string;
+  title: string;
+  description: string;
+  predictionType: 'price' | 'volume' | 'trend';
+  currentValue: number;
+  targetValue: number;
+  timeLimit: number;
+  reward: number;
+  difficulty: 'easy' | 'medium' | 'hard';
+}
+
+export interface TimeChallenge {
+  id: string;
+  name: string;
+  description: string;
+  puzzleCount: number;
+  timeLimit: number;
+  difficulty: 'easy' | 'medium' | 'hard';
+  record?: number;
+  personalBest?: number;
+}
+
+export interface TechnicalAnalysisPuzzle {
+  id: string;
+  title: string;
+  description: string;
+  chartUrl: string;
+  pattern: string;
+  options: string[];
+  correctAnswer: number;
+  explanation: string;
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
 }

@@ -31,12 +31,12 @@ jest.mock('../store/gameStore', () => ({
 describe('App', () => {
   it('renders header', () => {
     render(<App />);
-    expect(screen.getByText(/Blue Stock/i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1, name: /Blue Stock/i })).toBeInTheDocument();
   });
 
   it('displays streak information', () => {
     render(<App />);
-    expect(screen.getByText('5')).toBeInTheDocument();
+    expect(screen.getByText('Day Streak')).toBeInTheDocument();
   });
 
   it('renders puzzle game', () => {

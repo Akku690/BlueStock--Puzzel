@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Puzzle, UserProgress, UserStats } from '@/types';
+import { GameCategory, Puzzle, UserProgress, UserStats } from '@/types';
 import {
   getPuzzleByDate,
   getProgress,
@@ -15,13 +15,15 @@ interface GameState {
   currentPuzzle: Puzzle | null;
   userProgress: UserProgress | null;
   userStats: UserStats;
+  selectedCategory: GameCategory | 'All';
   isLoading: boolean;
   error: string | null;
   puzzleStartTime: number;
 
   // Actions
   initializeGame: () => Promise<void>;
-  loadPuzzle: (date: string) => Promise<void>;
+  loadPuzzle: (date: string, preferredCategory?: GameCategory) => Promise<void>;
+  setCategory: (category: GameCategory | 'All') => Promise<void>;
   submitAnswer: (answer: number) => Promise<void>;
   updateStats: () => Promise<void>;
   preloadPuzzles: () => Promise<void>;
@@ -41,6 +43,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   currentPuzzle: null,
   userProgress: null,
   userStats: defaultStats,
+  selectedCategory: 'All',
   isLoading: true,
   error: null,
   puzzleStartTime: 0,
@@ -78,7 +81,7 @@ export const useGameStore = create<GameState>((set, get) => ({
     }
   },
 
-  loadPuzzle: async (date: string) => {
+  loadPuzzle: async (date: string, preferredCategory?: GameCategory) => {
     try {
       set({ isLoading: true, error: null });
 
@@ -87,8 +90,12 @@ export const useGameStore = create<GameState>((set, get) => ({
 
       // Generate if not cached
       if (!puzzle) {
-        puzzle = generatePuzzle(date);
+        puzzle = generatePuzzle(date, preferredCategory);
         // Note: Puzzle will be saved when fetched from API or after generation
+      }
+
+      if (preferredCategory && puzzle.category !== preferredCategory) {
+        puzzle = generatePuzzle(date, preferredCategory);
       }
 
       // Load user progress for this puzzle
@@ -104,6 +111,12 @@ export const useGameStore = create<GameState>((set, get) => ({
       console.error('Error loading puzzle:', error);
       set({ error: 'Failed to load puzzle', isLoading: false });
     }
+  },
+
+  setCategory: async (category: GameCategory | 'All') => {
+    set({ selectedCategory: category });
+    const todayDate = getTodayDateString();
+    await get().loadPuzzle(todayDate, category === 'All' ? undefined : category);
   },
 
   submitAnswer: async (answer: number) => {
@@ -194,8 +207,6 @@ export const useGameStore = create<GameState>((set, get) => ({
 
   preloadPuzzles: async () => {
     try {
-      const puzzlesToPreload: Puzzle[] = [];
-
       // Generate next 7 days of puzzles
       for (let i = 0; i <= 7; i++) {
         const date = getDateString(i);
@@ -203,7 +214,6 @@ export const useGameStore = create<GameState>((set, get) => ({
 
         if (!puzzle) {
           puzzle = generatePuzzle(date);
-          puzzlesToPreload.push(puzzle);
         }
       }
 

@@ -3,6 +3,8 @@ import './Stats.css';
 
 const Stats = () => {
   const { userStats } = useGameStore();
+  const mastery = Math.min(100, Math.round((userStats.totalPuzzlesSolved / 75) * 100));
+  const playerLevel = Math.floor(userStats.totalPuzzlesSolved / 8) + 1;
 
   const stats = [
     {
@@ -24,6 +26,16 @@ const Stats = () => {
       label: 'Avg. Attempts',
       value: userStats.averageAttempts.toFixed(1),
       icon: '📊',
+    },
+    {
+      label: 'Player Level',
+      value: playerLevel,
+      icon: '🧠',
+    },
+    {
+      label: 'Mastery',
+      value: `${mastery}%`,
+      icon: '🚀',
     },
   ];
 

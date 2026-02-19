@@ -1,4 +1,4 @@
-import { Puzzle } from '@/types';
+import { GameCategory, Puzzle } from '@/types';
 
 /**
  * Generate a unique puzzle ID based on date
@@ -27,22 +27,24 @@ export const getDateString = (offsetDays: number): string => {
  * Generate puzzle data client-side (< 100ms requirement)
  * This is a simplified example - real implementation would be more complex
  */
-export const generatePuzzle = (date: string): Puzzle => {
+export const generatePuzzle = (date: string, preferredCategory?: GameCategory): Puzzle => {
   const startTime = performance.now();
   
   // Use date as seed for deterministic puzzle generation
   const seed = dateToSeed(date);
   const rng = seededRandom(seed);
 
-  const categories = ['Stock Market', 'Finance', 'Economics', 'Trading', 'Investment'];
-  const category = categories[Math.floor(rng() * categories.length)];
+  const categories: GameCategory[] = ['Stock Market', 'Finance', 'Economics', 'Trading', 'Investment', 'Grid Puzzles', 'Sudoku', 'Nonograms'];
+  const category = preferredCategory && categories.includes(preferredCategory)
+    ? preferredCategory
+    : categories[Math.floor(rng() * categories.length)];
 
   const difficulties: Array<'easy' | 'medium' | 'hard'> = ['easy', 'medium', 'hard'];
   const difficultyIndex = Math.floor(rng() * difficulties.length);
   const difficulty = difficulties[difficultyIndex];
 
   // Generate question based on category and difficulty
-  const puzzleData = getPuzzleData(category, difficulty, rng);
+  const puzzleData = getPuzzleData(category, rng);
 
   const puzzle: Puzzle = {
     id: generatePuzzleId(new Date(date)),
@@ -82,11 +84,10 @@ const seededRandom = (seed: number) => {
 };
 
 /**
- * Get puzzle data based on category and difficulty
+ * Get puzzle data based on category
  */
 const getPuzzleData = (
   category: string,
-  difficulty: string,
   rng: () => number
 ): { question: string; options: string[]; correctAnswer: number } => {
   const puzzleBank = {
@@ -129,6 +130,42 @@ const getPuzzleData = (
         question: 'What is GDP?',
         options: ['Gross Domestic Product', 'General Development Plan', 'Global Distribution Point', 'Government Debt Percentage'],
         correctAnswer: 0,
+      },
+    ],
+    'Grid Puzzles': [
+      {
+        question: 'In a 3x3 market grid, each row and column must have one growth sector. Which concept is this closest to?',
+        options: ['Constraint satisfaction', 'Random guessing', 'Momentum trading', 'Sentiment mapping'],
+        correctAnswer: 0,
+      },
+      {
+        question: 'What is the first step in solving a grid logic puzzle?',
+        options: ['Fill all cells randomly', 'Identify fixed clues and constraints', 'Skip to the final row', 'Use only diagonal rules'],
+        correctAnswer: 1,
+      },
+    ],
+    'Sudoku': [
+      {
+        question: 'Which number rule defines classic Sudoku?',
+        options: ['Numbers 0-8 can repeat', 'Numbers 1-9 appear once per row/column/box', 'Only odd numbers allowed', 'Diagonals must be equal'],
+        correctAnswer: 1,
+      },
+      {
+        question: 'What is a common advanced Sudoku strategy?',
+        options: ['Naked pairs', 'Random backfill', 'Color inversion', 'Cross multiplication'],
+        correctAnswer: 0,
+      },
+    ],
+    'Nonograms': [
+      {
+        question: 'In Nonograms, row and column numbers represent:',
+        options: ['Cell coordinates', 'Lengths of consecutive filled blocks', 'Difficulty levels', 'Total empty cells'],
+        correctAnswer: 1,
+      },
+      {
+        question: 'What does an "X" usually indicate in a Nonogram?',
+        options: ['A guaranteed filled cell', 'A blocked/empty cell', 'A bonus move', 'A hint token'],
+        correctAnswer: 1,
       },
     ],
   };

@@ -2,8 +2,7 @@
 
 ## 🎯 Project Overview
 
-**Blue Stock Puzzle** is a high-performance, offline-first daily puzzle game focused on stock market and finance topics. Built with React and TypeScript, it delivers exceptional user experience with sub-100ms puzzle generation and complete offline functionality.
-
+**Blue 
 ## ✨ Key Features Implemented
 
 ### Performance Achievements ✅
